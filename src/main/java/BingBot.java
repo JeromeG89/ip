@@ -16,14 +16,13 @@ public class BingBot {
 
         while (true) {
             String input = scanner.nextLine();
+            System.out.println(line);
             String[] parts = input.split(" ");
             if (input.equals("bye")) {
-                System.out.println(line);
                 System.out.println("Bye. Hope to never see you again >:[");
                 System.out.println(line);
                 break;
             } else if (input.equals("list")) {
-                System.out.println(line);
                 for (int i = 0; i < stored.size(); i++) { // wanted to use forEach but im dumb
                     System.out.println((i + 1) + ". " + stored.get(i));
                 }
@@ -33,15 +32,16 @@ public class BingBot {
                 stored.get(markIndex).unmark();
                 System.out.println("Ok i unmarked liao");
                 System.out.println(stored.get(markIndex));
+                System.out.println(line);
             } else if (parts[0].equals("mark") && parts.length >= 2 && Integer.parseInt(parts[1]) <= stored.size()) {
                 int markIndex = Integer.parseInt(parts[1]) - 1;
                 stored.get(markIndex).mark();
                 System.out.println("Ok i marked liao");
                 System.out.println(stored.get(markIndex));
+                System.out.println(line);
             } else {
                 Task inputTask = new Task(input);
                 stored.add(inputTask);
-                System.out.println(line);
                 System.out.println("added: " + input);
                 System.out.println(line);
             }
