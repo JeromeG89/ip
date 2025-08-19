@@ -1,4 +1,6 @@
-public class Task {
+package Tasks;
+
+public abstract class Task {
     boolean done;
     String name;
 
@@ -9,8 +11,8 @@ public class Task {
 
     public String toString() {
         return done
-            ? "[X] " + this.name
-            : "[] " + this.name;
+                ? "[X] " + this.name
+                : "[] " + this.name;
     }
 
     public void mark() {
