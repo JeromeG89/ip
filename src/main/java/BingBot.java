@@ -81,13 +81,13 @@ public class BingBot {
                 return new ToDo(input.substring(first, input.length()));
             case "deadline":
                 if (input.split("/by ").length < 2) {
-                    System.err.println("dont play punk");
+                    // System.err.println("dont play punk");
                     return null;
                 }
                 return new Deadline(input.substring(first, last), input.split("/by ")[1]);
             case "event":
                 if (input.split("/").length < 3) {
-                    System.err.println("dont play punk");
+                    // System.err.println("dont play punk");
                     return null;
                 }
                 return new Event(input.substring(first, last),
