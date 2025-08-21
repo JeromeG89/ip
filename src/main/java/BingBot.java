@@ -20,8 +20,7 @@ public class BingBot {
 
     public static void main(String[] args) {
         String greet = String.format(line
-                + "\n Hello! I'm %s\n What can I do for you?\n" + line
-                + "\n Bye. Hope to see you again soon!\n" + line, name);
+                + "\n Hello! I'm %s\n What can I do for you?\n" + line, name);
         System.out.println(greet);
         List<Task> stored = new ArrayList<>();
 
@@ -29,6 +28,7 @@ public class BingBot {
 
         while (true) {
             String input = scanner.nextLine();
+            // System.out.println(line);
             boolean result = BingBot.handleMessage(input, stored);
             if (result) {
                 break;
@@ -39,14 +39,14 @@ public class BingBot {
 
     /* Return True when end session, False otherwise */
     public static boolean handleMessage(String input, List<Task> stored) {
-        System.out.println(line);
+        // System.out.println(line);
         String[] parts = input.split(" ");
         String command = parts[0];
         if (command.equals("mark") || command.equals("unmark")) {
             try {
                 Integer.parseInt(parts[1]);
             } catch (NumberFormatException e) {
-                System.err.println("dont play punk");
+                System.out.println("dont play punk");
                 System.out.println(line);
                 return false;
             }
@@ -83,7 +83,7 @@ public class BingBot {
         } else {
             Task inputTask = BingBot.createTask(input, parts);
             if (inputTask == null) {
-                System.err.println("dont play punk");
+                System.out.println("dont play punk");
                 System.out.println(line);
                 return false;
             }
@@ -105,13 +105,11 @@ public class BingBot {
                 return new ToDo(input.substring(first, input.length()));
             case "deadline":
                 if (input.split("/by ").length < 2) {
-                    // System.err.println("dont play punk");
                     return null;
                 }
                 return new Deadline(input.substring(first, last), input.split("/by ")[1]);
             case "event":
                 if (input.split("/").length < 3) {
-                    // System.err.println("dont play punk");
                     return null;
                 }
                 return new Event(input.substring(first, last),
