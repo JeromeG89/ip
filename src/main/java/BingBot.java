@@ -76,7 +76,7 @@ public class BingBot {
             int markIndex = Integer.parseInt(parts[1]) - 1;
             Task toDeleteTask = stored.get(markIndex);
             stored.remove(markIndex);
-            System.out.println("Ok i added this: ");
+            System.out.println("Ok i deleted this: ");
             System.out.println(toDeleteTask);
             System.out.println(String.format("Now u got %d tasks in the list :[", stored.size()));
             System.out.println(line);
