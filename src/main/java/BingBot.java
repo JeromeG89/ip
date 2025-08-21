@@ -46,7 +46,7 @@ public class BingBot {
             try {
                 Integer.parseInt(parts[1]);
             } catch (NumberFormatException e) {
-                System.out.println("dont play punk");
+                System.out.println("dont play PUNK");
                 System.out.println(line);
                 return false;
             }
@@ -83,7 +83,7 @@ public class BingBot {
         } else {
             Task inputTask = BingBot.createTask(input, parts);
             if (inputTask == null) {
-                System.out.println("dont play punk");
+                System.out.println("dont play PUNK");
                 System.out.println(line);
                 return false;
             }
