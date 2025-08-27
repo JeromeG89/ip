@@ -1,22 +1,23 @@
 package Tasks;
 
+import java.time.LocalDateTime;
+
 public class Deadline extends Task {
-    String to;
+    LocalDateTime to;
 
     public Deadline(String name, String to) {
-        super(name);
-        this.to = to;
+        this(name, to, false);
     }
 
     public Deadline(String name, String to, boolean done) {
-        super(name);
-        super.done = done;
-        this.to = to;
+        super(name, done);
+        this.to = super.parseDate(to);
     }
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + String.format("(by: %s)", to);
+        
+        return "[D]" + super.toString() + String.format("(by: %s)", to.format(outputFormatter));
     }
 
     public static Task fromMemory(String input) {
@@ -26,6 +27,6 @@ public class Deadline extends Task {
 
     @Override
     public String toMemory() {
-        return String.format("D|%d|%s|%s", this.done ? 1 : 0, this.name, this.to);
+        return String.format("D|%d|%s|%s", super.getDone() ? 1 : 0, super.getName(), this.to);
     }
 }

@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -34,21 +35,20 @@ public class BingBot {
 
         while (true) {
             String input = scanner.nextLine();
-            // System.out.println(line);
             boolean result = BingBot.handleMessage(input, stored);
             if (result) {
                 break;
             }
         }
-        for (Task task : stored) {
-            try (FileWriter writer = new FileWriter(BingBot.filePath)) {
-                for (Task t : stored) {
-                    writer.write(t.toMemory() + "\n");
-                }
-            } catch (IOException e) {
-                System.out.println("Error saving file: " + e.getMessage());
+
+        try (FileWriter writer = new FileWriter(BingBot.filePath)) {
+            for (Task t : stored) {
+                writer.write(t.toMemory() + "\n");
             }
+        } catch (IOException e) {
+            System.out.println("Error saving file: " + e.getMessage());
         }
+
         scanner.close();
     }
 
@@ -115,23 +115,27 @@ public class BingBot {
         String taskType = parts[0];
         int first = input.indexOf(" ");
         int last = input.indexOf("/");
-        switch (taskType) {
-            case "todo":
-                return new ToDo(input.substring(first, input.length()));
-            case "deadline":
-                if (input.split("/by ").length < 2) {
+        try {
+            switch (taskType) {
+                case "todo":
+                    return new ToDo(input.substring(first + 1, input.length()));
+                case "deadline":
+                    if (input.split("/by ").length < 2) { // can throw exception here instead nexttime
+                        return null;
+                    }
+                    return new Deadline(input.substring(first, last), input.split("/by ")[1]);
+                case "event":
+                    if (input.split("/").length < 3) { // can throw exception here instead nexttime
+                        return null;
+                    }
+                    return new Event(input.substring(first, last),
+                            input.split("/from |/to ")[1],
+                            input.split("/from |/to ")[2]);
+                default:
                     return null;
-                }
-                return new Deadline(input.substring(first, last), input.split("/by ")[1]);
-            case "event":
-                if (input.split("/").length < 3) {
-                    return null;
-                }
-                return new Event(input.substring(first, last),
-                        input.split("/from |/to ")[1],
-                        input.split("/from |/to ")[2]);
-            default:
-                return null;
+            }
+        } catch (DateTimeParseException e) {
+            return null;
         }
     }
 

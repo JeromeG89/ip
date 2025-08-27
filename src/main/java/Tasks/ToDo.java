@@ -2,12 +2,11 @@ package Tasks;
 
 public class ToDo extends Task {
     public ToDo(String name) {
-        super(name);
+        this(name, false);
     }
 
     protected ToDo(String name, boolean done) {
-        super(name);
-        super.done = done;
+        super(name, done);
     }
 
     @Override
@@ -22,6 +21,6 @@ public class ToDo extends Task {
 
     @Override
     public String toMemory() {
-        return String.format("T|%d|%s", this.done ? 1 : 0, this.name);
+        return String.format("T|%d|%s", super.getDone() ? 1 : 0, super.getName());
     }
 }

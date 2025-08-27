@@ -1,25 +1,29 @@
 package Tasks;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
+
 public class Event extends Task {
-    String from;
-    String to;
+    LocalDateTime from;
+    LocalDateTime to;
 
     public Event(String name, String from, String to) {
-        super(name);
-        this.from = from;
-        this.to = to;
+        this(name, from, to, false);
     }
 
     public Event(String name, String from, String to, boolean done) {
-        super(name);
-        super.done = done;
-        this.from = from;
-        this.to = to;
+        super(name, done);
+        try {
+        this.from = parseDate(from);
+        this.to = parseDate(to);
+        } catch (DateTimeParseException e) {
+            
+        }
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + String.format("(from: %s to: %s)", from, to);
+        return "[E]" + super.toString() + String.format("(from: %s to: %s)", from.format(outputFormatter), to.format(outputFormatter));
     }
 
     public static Task fromMemory(String input) {
@@ -29,6 +33,6 @@ public class Event extends Task {
 
     @Override
     public String toMemory() {
-        return String.format("E|%d|%s|%s|%s", this.done ? 1 : 0, this.name, this.from, this.to);
+        return String.format("E|%d|%s|%s|%s", super.getDone() ? 1 : 0, super.getName() , this.from, this.to);
     }
 }
