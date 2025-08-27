@@ -26,12 +26,14 @@ public abstract class Task {
                 : "[] " + this.name;
     }
 
-    public void mark() {
+    public Task mark() {
         this.done = true;
+        return this;
     }
 
-    public void unmark() {
+    public Task unmark() {
         this.done = false;
+        return this;
     }
 
     public abstract String toMemory();

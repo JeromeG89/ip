@@ -20,40 +20,32 @@ enum commandTypes {
 }
 
 public class BingBot {
-    private static String line = "____________________________________________________________";
-    private static String name = "BingBot";
+
     private static String filePath = "./data/bingTask.txt";
+    protected static Ui ui = new Ui();
 
     public static void main(String[] args) {
-        String greet = String.format(line
-                + "\n Hello! I'm %s\n What can I do for you?\n" + line, name);
-        System.out.println(greet);
-        List<Task> stored = new ArrayList<>();
-        BingBot.getMemory(stored);
+        TaskList taskList = new TaskList();
+        ui.greet();
+
+        BingBot.getMemory(taskList);
 
         Scanner scanner = new Scanner(System.in);
+        Storage storer = new Storage(BingBot.filePath);
 
         while (true) {
             String input = scanner.nextLine();
-            boolean result = BingBot.handleMessage(input, stored);
+            boolean result = BingBot.handleMessage(input, taskList);
             if (result) {
                 break;
             }
-        }
-
-        try (FileWriter writer = new FileWriter(BingBot.filePath)) {
-            for (Task t : stored) {
-                writer.write(t.toMemory() + "\n");
-            }
-        } catch (IOException e) {
-            System.out.println("Error saving file: " + e.getMessage());
         }
 
         scanner.close();
     }
 
     /* Return True when end session, False otherwise */
-    public static boolean handleMessage(String input, List<Task> stored) {
+    public static boolean handleMessage(String input, TaskList taskList) {
         // System.out.println(line);
         String[] parts = input.split(" ");
         String command = parts[0];
@@ -61,52 +53,35 @@ public class BingBot {
             try {
                 Integer.parseInt(parts[1]);
             } catch (NumberFormatException e) {
-                System.out.println("dont play PUNK");
-                System.out.println(line);
+                ui.playPunk();
                 return false;
             }
         }
         if (input.equals("bye")) {
-            System.out.println("Bye. Hope to never see you again >:[");
-            System.out.println(line);
+            ui.bye();
             return true;
         } else if (input.equals("list")) {
-            for (int i = 0; i < stored.size(); i++) { // wanted to use forEach but im dumb
-                System.out.println((i + 1) + ". " + stored.get(i));
-            }
-            System.out.println(line);
-        } else if (command.equals("unmark") && parts.length >= 2 && Integer.parseInt(parts[1]) <= stored.size()) {
+            System.out.println(taskList.toString());
+        } else if (command.equals("unmark") && parts.length >= 2 && Integer.parseInt(parts[1]) <= taskList.size()) {
             int markIndex = Integer.parseInt(parts[1]) - 1;
-            stored.get(markIndex).unmark();
-            System.out.println("Ok i unmarked liao");
-            System.out.println(stored.get(markIndex));
-            System.out.println(line);
-        } else if (command.equals("mark") && parts.length >= 2 && Integer.parseInt(parts[1]) <= stored.size()) {
+            Task unmarked = taskList.unmark(markIndex);
+            ui.unmark(unmarked);
+        } else if (command.equals("mark") && parts.length >= 2 && Integer.parseInt(parts[1]) <= taskList.size()) {
             int markIndex = Integer.parseInt(parts[1]) - 1;
-            stored.get(markIndex).mark();
-            System.out.println("Ok i marked liao");
-            System.out.println(stored.get(markIndex));
-            System.out.println(line);
+            Task marked = taskList.mark(markIndex);
+            ui.mark(marked);
         } else if (command.equals("delete") && parts.length >= 2) {
             int markIndex = Integer.parseInt(parts[1]) - 1;
-            Task toDeleteTask = stored.get(markIndex);
-            stored.remove(markIndex);
-            System.out.println("Ok i deleted this: ");
-            System.out.println(toDeleteTask);
-            System.out.println(String.format("Now u got %d tasks in the list :[", stored.size()));
-            System.out.println(line);
+            Task deletedTask = taskList.remove(markIndex);
+            ui.delete(deletedTask, taskList.size());
         } else {
             Task inputTask = BingBot.createTask(input, parts);
             if (inputTask == null) {
-                System.out.println("dont play PUNK");
-                System.out.println(line);
+                ui.playPunk();
                 return false;
             }
-            stored.add(inputTask);
-            System.out.println("Ok i added this: ");
-            System.out.println(inputTask);
-            System.out.println(String.format("Now u got %d tasks in the list :[", stored.size()));
-            System.out.println(line);
+            taskList.add(inputTask);
+            ui.add(inputTask, taskList.size());
         }
         return false;
     }
