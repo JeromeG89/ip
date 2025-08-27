@@ -1,8 +1,8 @@
 package Tasks;
 
 public abstract class Task {
-    boolean done;
-    String name;
+    protected boolean done;
+    protected String name;
 
     public Task(String name) {
         this.name = name;
@@ -21,5 +21,12 @@ public abstract class Task {
 
     public void unmark() {
         this.done = false;
+    }
+
+    public abstract String toMemory();
+
+    public static Task fromMemory(String input) { //incase others forget
+        String parts[] = input.split("\\|");
+        return new ToDo(parts[2], parts[1].equals("1"));
     }
 }

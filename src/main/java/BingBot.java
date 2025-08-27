@@ -1,3 +1,7 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -17,12 +21,14 @@ enum commandTypes {
 public class BingBot {
     private static String line = "____________________________________________________________";
     private static String name = "BingBot";
+    private static String filePath = "./data/bingTask.txt";
 
     public static void main(String[] args) {
         String greet = String.format(line
                 + "\n Hello! I'm %s\n What can I do for you?\n" + line, name);
         System.out.println(greet);
         List<Task> stored = new ArrayList<>();
+        BingBot.getMemory(stored);
 
         Scanner scanner = new Scanner(System.in);
 
@@ -32,6 +38,15 @@ public class BingBot {
             boolean result = BingBot.handleMessage(input, stored);
             if (result) {
                 break;
+            }
+        }
+        for (Task task : stored) {
+            try (FileWriter writer = new FileWriter(BingBot.filePath)) {
+                for (Task t : stored) {
+                    writer.write(t.toMemory() + "\n");
+                }
+            } catch (IOException e) {
+                System.out.println("Error saving file: " + e.getMessage());
             }
         }
         scanner.close();
@@ -115,6 +130,43 @@ public class BingBot {
                 return new Event(input.substring(first, last),
                         input.split("/from |/to ")[1],
                         input.split("/from |/to ")[2]);
+            default:
+                return null;
+        }
+    }
+
+    public static void getMemory(List<Task> stored) {
+        File file = new File(BingBot.filePath);
+
+        try {
+            if (!file.exists()) {
+                file.createNewFile();
+                return;
+            }
+
+            Scanner scanner = new Scanner(file);
+
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                stored.add(BingBot.parseMemory(line));
+            }
+
+            scanner.close();
+
+        } catch (IOException e) {
+            System.out.println("Error handling file: " + e.getMessage());
+        }
+    }
+
+    public static Task parseMemory(String input) {
+        String[] parts = input.split("\\|");
+        switch (parts[0]) {
+            case "T":
+                return ToDo.fromMemory(input);
+            case "D":
+                return Deadline.fromMemory(input);
+            case "E":
+                return Event.fromMemory(input);
             default:
                 return null;
         }
