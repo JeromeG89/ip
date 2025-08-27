@@ -25,22 +25,21 @@ public class BingBot {
     protected static Ui ui = new Ui();
 
     public static void main(String[] args) {
-        TaskList taskList = new TaskList();
-        ui.greet();
-
-        BingBot.getMemory(taskList);
-
+        TaskList taskList;
         Scanner scanner = new Scanner(System.in);
-        Storage storer = new Storage(BingBot.filePath);
-
+        Storage storage = new Storage(BingBot.filePath);
+        
+        ui.greet();
+        
+        taskList = storage.getMemory();
         while (true) {
             String input = scanner.nextLine();
             boolean result = BingBot.handleMessage(input, taskList);
+            storage.toMemory(taskList);
             if (result) {
                 break;
             }
         }
-
         scanner.close();
     }
 
@@ -114,40 +113,4 @@ public class BingBot {
         }
     }
 
-    public static void getMemory(List<Task> stored) {
-        File file = new File(BingBot.filePath);
-
-        try {
-            if (!file.exists()) {
-                file.createNewFile();
-                return;
-            }
-
-            Scanner scanner = new Scanner(file);
-
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                stored.add(BingBot.parseMemory(line));
-            }
-
-            scanner.close();
-
-        } catch (IOException e) {
-            System.out.println("Error handling file: " + e.getMessage());
-        }
-    }
-
-    public static Task parseMemory(String input) {
-        String[] parts = input.split("\\|");
-        switch (parts[0]) {
-            case "T":
-                return ToDo.fromMemory(input);
-            case "D":
-                return Deadline.fromMemory(input);
-            case "E":
-                return Event.fromMemory(input);
-            default:
-                return null;
-        }
-    }
 }
