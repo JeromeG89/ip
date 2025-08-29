@@ -3,14 +3,14 @@ package Tasks;
 import java.time.LocalDateTime;
 
 public class Deadline extends Task {
-    LocalDateTime to;
+    private LocalDateTime to;
 
     public Deadline(String name, String to) {
         this(name, to, false);
     }
 
-    public Deadline(String name, String to, boolean done) {
-        super(name, done);
+    public Deadline(String name, String to, boolean isDone) {
+        super(name, isDone);
         this.to = super.parseDate(to);
     }
 
@@ -27,6 +27,10 @@ public class Deadline extends Task {
 
     @Override
     public String toMemory() {
-        return String.format("D|%d|%s|%s", super.getDone() ? 1 : 0, super.getName(), this.to);
+        return String.format("D|%d|%s|%s", super.isDone() ? 1 : 0, super.getName(), this.to);
+    }
+
+    public LocalDateTime getDeadline() {
+        return this.to;
     }
 }

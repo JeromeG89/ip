@@ -1,4 +1,5 @@
 package parser;
+
 import java.time.format.DateTimeParseException;
 
 import Tasks.Deadline;
@@ -16,6 +17,7 @@ public class Parser {
     public Parser(TaskList taskList) {
         this.taskList = taskList;
     }
+
     /* Return True when end session, False otherwise */
     public boolean handleMessage(String input) {
         String[] parts = input.split(" ");
@@ -69,14 +71,14 @@ public class Parser {
                     if (input.split("/by ").length < 2) { // can throw exception here instead nexttime
                         return null;
                     }
-                    return new Deadline(input.substring(first, last), input.split("/by ")[1]);
+                    return new Deadline(input.substring(first + 1, last), input.split(" /by ")[1]);
                 case "event":
-                    if (input.split("/").length < 3) { // can throw exception here instead nexttime
+                    if (input.split("/from |/to ").length < 3) { // can throw exception here instead nexttime
                         return null;
                     }
-                    return new Event(input.substring(first, last),
-                            input.split("/from |/to ")[1],
-                            input.split("/from |/to ")[2]);
+                    return new Event(input.substring(first + 1, last),
+                            input.split(" /from | /to ")[1],
+                            input.split(" /from | /to ")[2], false);
                 default:
                     return null;
             }

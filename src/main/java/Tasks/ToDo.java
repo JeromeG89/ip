@@ -5,8 +5,8 @@ public class ToDo extends Task {
         this(name, false);
     }
 
-    protected ToDo(String name, boolean done) {
-        super(name, done);
+    protected ToDo(String name, boolean isDone) {
+        super(name, isDone);
     }
 
     @Override
@@ -21,6 +21,6 @@ public class ToDo extends Task {
 
     @Override
     public String toMemory() {
-        return String.format("T|%d|%s", super.getDone() ? 1 : 0, super.getName());
+        return String.format("T|%d|%s", super.isDone() ? 1 : 0, super.getName());
     }
 }

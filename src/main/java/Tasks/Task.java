@@ -6,33 +6,33 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public abstract class Task {
-    private boolean done;
+    private boolean isDone;
     private String name;
     protected DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm");
 
     public Task(String name) {
         this.name = name;
-        this.done = false;
+        this.isDone = false;
     }
 
-    public Task(String name, boolean done) {
+    public Task(String name, boolean isDone) {
         this(name);
-        this.done = done;
+        this.isDone = isDone;
     }
 
     public String toString() {
-        return done
+        return isDone
                 ? "[X] " + this.name
                 : "[] " + this.name;
     }
 
     public Task mark() {
-        this.done = true;
+        this.isDone = true;
         return this;
     }
 
     public Task unmark() {
-        this.done = false;
+        this.isDone = false;
         return this;
     }
 
@@ -54,8 +54,8 @@ public abstract class Task {
 
     }
 
-    public boolean getDone() {
-        return this.done;
+    public boolean isDone() {
+        return this.isDone;
     }
 
     public String getName() {
