@@ -1,14 +1,11 @@
-package parser;
+package bingBot.parser;
 
 import java.time.format.DateTimeParseException;
 
-import Tasks.Deadline;
-import Tasks.Event;
-import Tasks.Task;
-import Tasks.ToDo;
-import bingbot.BingBot;
-import tasklist.TaskList;
-import ui.Ui;
+import bingBot.BingBot;
+import bingBot.Tasks.*;
+import bingBot.tasklist.TaskList;
+import bingBot.ui.Ui;
 
 public class Parser {
     Ui ui = BingBot.ui;

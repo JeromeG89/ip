@@ -1,4 +1,4 @@
-package storage;
+package bingBot.storage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -6,11 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import Tasks.Deadline;
-import Tasks.Event;
-import Tasks.Task;
-import Tasks.ToDo;
-import tasklist.TaskList;
+import bingBot.Tasks.*;
+import bingBot.tasklist.TaskList;
 
 public class Storage {
     String filePath;

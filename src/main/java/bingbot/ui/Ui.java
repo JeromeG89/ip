@@ -1,5 +1,5 @@
-package ui;
-import Tasks.Task;
+package bingBot.ui;
+import bingBot.Tasks.Task;
 
 public class Ui {
     public static String line = "____________________________________________________________";

@@ -1,4 +1,4 @@
-package Tasks;
+package bingBot.Tasks;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;

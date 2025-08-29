@@ -1,4 +1,4 @@
-package bingbot;
+package bingBot;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -8,14 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import Tasks.Deadline;
-import Tasks.Event;
-import Tasks.Task;
-import Tasks.ToDo;
-import parser.Parser;
-import storage.Storage;
-import tasklist.TaskList;
-import ui.Ui;
+import bingBot.Tasks.Deadline;
+import bingBot.Tasks.Event;
+import bingBot.Tasks.Task;
+import bingBot.Tasks.ToDo;
+import bingBot.parser.Parser;
+import bingBot.storage.Storage;
+import bingBot.tasklist.TaskList;
+import bingBot.ui.Ui;
 
 enum commandTypes {
     bye,

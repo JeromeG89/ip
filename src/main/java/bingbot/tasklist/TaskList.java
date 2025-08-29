@@ -1,12 +1,9 @@
-package tasklist;
+package bingBot.tasklist;
 import java.util.ArrayList;
 import java.util.List;
 
-import Tasks.Deadline;
-import Tasks.Event;
-import Tasks.Task;
-import Tasks.ToDo;
-import ui.Ui;
+import bingBot.Tasks.*;
+import bingBot.ui.Ui;
 
 public class TaskList extends ArrayList<Task> {
 

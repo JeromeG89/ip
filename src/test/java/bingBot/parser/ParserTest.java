@@ -7,12 +7,9 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import Tasks.Deadline;
-import Tasks.Event;
-import Tasks.ToDo;
-import parser.Parser;
-import Tasks.Task;
-import tasklist.TaskList;
+import bingBot.Tasks.*;
+import bingBot.parser.Parser;
+import bingBot.tasklist.TaskList;
 
 class ParserTest {
 
