@@ -1,4 +1,5 @@
 package bingbot;
+
 import java.util.Scanner;
 
 import bingbot.parser.Parser;
@@ -6,35 +7,44 @@ import bingbot.storage.Storage;
 import bingbot.tasklist.TaskList;
 import bingbot.ui.Ui;
 
-enum commandTypes {
-    bye,
-    list,
-    mark,
-    unmark,
-}
-
+/**
+ * Class for the BingBot application.
+ * BingBot is a task management chatbot that stores tasks,
+ * retrieves them from memory, and allows interaction via commands.
+ */
 public class BingBot {
+    /** File path where tasks are stored. */
     public static final String FILE_PATH = "./data/bingTask.txt";
-    public static Ui ui = new Ui();
 
+    private static Ui ui = new Ui();
+
+    /**
+     * Runs the BingBot program by initializing storage, UI, and parser.
+     * Continuously reads user input until the exit command is given.
+     *
+     * @param args Command line arguments.
+     */
     public static void main(String[] args) {
         TaskList taskList;
 
-        Scanner scanner = new Scanner(System.in);
-        Storage storage = new Storage(BingBot.FILE_PATH);
-        ui.greet();
-        taskList = storage.getMemory();
-        Parser parser = new Parser(taskList);
-        
-        while (true) {
-            String input = scanner.nextLine();
-            boolean result = parser.handleMessage(input);
-            storage.toMemory(taskList);
-            if (result) {
-                break;
+        try (Scanner scanner = new Scanner(System.in)) {
+            Storage storage = new Storage(BingBot.FILE_PATH);
+            ui.greet();
+            taskList = storage.getMemory();
+            Parser parser = new Parser(taskList, ui);
+
+            while (true) {
+                String input = scanner.nextLine();
+                boolean result = parser.handleMessage(input);
+                storage.toMemory(taskList);
+                if (result) {
+                    break;
+                }
             }
         }
-        scanner.close();
     }
 
+    public Ui getUi() {
+        return this.ui;
+    }
 }

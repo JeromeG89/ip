@@ -2,7 +2,6 @@ package bingbot.parser;
 
 import java.time.format.DateTimeParseException;
 
-import bingbot.BingBot;
 import bingbot.Tasks.Deadline;
 import bingbot.Tasks.Event;
 import bingbot.Tasks.Task;
@@ -11,15 +10,22 @@ import bingbot.tasklist.TaskList;
 import bingbot.ui.Ui;
 
 /**
- * Parser is responsible for interpreting user input and converting it into
+ * Interprets user input and converting it into
  * commands or tasks.
  */
 public class Parser {
-    private final Ui ui = BingBot.ui;
-    private TaskList taskList;
+    private final Ui ui;
+    private final TaskList taskList;
 
-    public Parser(TaskList taskList) {
+    /**
+     * Creates a Parser that will process user input into commands.
+     *
+     * @param taskList the list of tasks to operate on.
+     * @param ui       the user interface to interact with.
+     */
+    public Parser(TaskList taskList, Ui ui) {
         this.taskList = taskList;
+        this.ui = ui;
     }
 
     /**

@@ -29,7 +29,7 @@ public class TaskList extends ArrayList<Task> {
         for (int i = 0; i < super.size(); i++) {
             sb.append(i + 1).append(". ").append(super.get(i)).append("\n");
         }
-        sb.append(Ui.line).append("\n");
+        sb.append(Ui.LINE).append("\n");
         return sb.toString();
     }
 
