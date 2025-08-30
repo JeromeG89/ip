@@ -1,4 +1,4 @@
-package bingBot.Tasks;
+package bingbot.Tasks;
 
 public class ToDo extends Task {
     public ToDo(String name) {

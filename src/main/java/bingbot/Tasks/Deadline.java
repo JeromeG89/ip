@@ -1,4 +1,4 @@
-package bingBot.Tasks;
+package bingbot.Tasks;
 
 import java.time.LocalDateTime;
 

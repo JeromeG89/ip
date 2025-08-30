@@ -1,21 +1,35 @@
-package bingBot.storage;
+package bingbot.storage;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
-import bingBot.Tasks.*;
-import bingBot.tasklist.TaskList;
+import bingbot.Tasks.Deadline;
+import bingbot.Tasks.Event;
+import bingbot.Tasks.Task;
+import bingbot.Tasks.ToDo;
+import bingbot.tasklist.TaskList;
 
+/**
+ * Handles reading from and writing to the storage file for tasks.
+ */
 public class Storage {
-    String filePath;
+    /** Path to the storage file. */
+    private final String filePath;
 
     public Storage(String filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * Saves the current TaskList to the storage file.
+     *
+     * Returns true if the operation succeeds, false otherwise.
+     *
+     * @param stored the TaskList to save.
+     * @return true if saved successfully, false if an error occurred.
+     */
     public boolean toMemory(TaskList stored) {
         try (FileWriter writer = new FileWriter(this.filePath)) {
             for (Task t : stored) {
@@ -28,6 +42,15 @@ public class Storage {
         }
     }
 
+    /**
+     * Loads tasks from the storage file into memory.
+     *
+     * Returns a TaskList containing all tasks found in the file.
+     * If the file does not exist, a new empty TaskList is created.
+     * Returns null if an error occurs while reading the file.
+     *
+     * @return a TaskList loaded from the file, or null if an error occurs.
+     */
     public TaskList getMemory() {
         File file = new File(this.filePath);
 
@@ -52,17 +75,23 @@ public class Storage {
         }
     }
 
+    /**
+     * Parses a line from the storage file into a Task object.
+     *
+     * Returns the corresponding Task (ToDo, Deadline, Event) based on the line
+     * prefix.
+     * Returns null if the task type is unrecognized.
+     *
+     * @param input the line from the storage file.
+     * @return a Task object parsed from the line, or null if invalid.
+     */
     public Task parseMemory(String input) {
         String[] parts = input.split("\\|");
-        switch (parts[0]) {
-            case "T":
-                return ToDo.fromMemory(input);
-            case "D":
-                return Deadline.fromMemory(input);
-            case "E":
-                return Event.fromMemory(input);
-            default:
-                return null;
-        }
+        return switch (parts[0]) {
+        case "T" -> ToDo.fromMemory(input);
+        case "D" -> Deadline.fromMemory(input);
+        case "E" -> Event.fromMemory(input);
+        default -> null;
+        };
     }
 }

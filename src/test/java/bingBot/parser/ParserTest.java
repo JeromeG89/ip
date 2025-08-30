@@ -1,15 +1,18 @@
-package bingBot.parser;
-
-import static org.junit.jupiter.api.Assertions.*;
+package bingbot.parser;
 
 import java.time.LocalDateTime;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import bingBot.Tasks.*;
-import bingBot.parser.Parser;
-import bingBot.tasklist.TaskList;
+import bingbot.Tasks.Deadline;
+import bingbot.Tasks.Event;
+import bingbot.Tasks.Task;
+import bingbot.Tasks.ToDo;
+import bingbot.tasklist.TaskList;
 
 class ParserTest {
 

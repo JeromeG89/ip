@@ -1,21 +1,35 @@
-package bingBot.parser;
+package bingbot.parser;
 
 import java.time.format.DateTimeParseException;
 
-import bingBot.BingBot;
-import bingBot.Tasks.*;
-import bingBot.tasklist.TaskList;
-import bingBot.ui.Ui;
+import bingbot.BingBot;
+import bingbot.Tasks.Deadline;
+import bingbot.Tasks.Event;
+import bingbot.Tasks.Task;
+import bingbot.Tasks.ToDo;
+import bingbot.tasklist.TaskList;
+import bingbot.ui.Ui;
 
+/**
+ * Parser is responsible for interpreting user input and converting it into
+ * commands or tasks.
+ */
 public class Parser {
-    Ui ui = BingBot.ui;
-    TaskList taskList;
+    private final Ui ui = BingBot.ui;
+    private TaskList taskList;
 
     public Parser(TaskList taskList) {
         this.taskList = taskList;
     }
 
-    /* Return True when end session, False otherwise */
+    /**
+     * Handles a user input message and executes the corresponding action.
+     *
+     * Returns true if the input ends the session (i.e., "bye"), false otherwise.
+     *
+     * @param input the raw user input string.
+     * @return true if the session should end, false otherwise.
+     */
     public boolean handleMessage(String input) {
         String[] parts = input.split(" ");
         String command = parts[0];
@@ -56,28 +70,38 @@ public class Parser {
         return false;
     }
 
+    /**
+     * Creates a Task object from the given user input.
+     *
+     * Returns a Task (ToDo, Deadline, Event) if parsing is successful; null
+     * otherwise.
+     *
+     * @param input the raw input string from the user.
+     * @param parts the input split into words.
+     * @return a Task object or null if input is invalid.
+     */
     public Task createTask(String input, String[] parts) {
         String taskType = parts[0];
         int first = input.indexOf(" ");
         int last = input.indexOf("/");
         try {
             switch (taskType) {
-                case "todo":
-                    return new ToDo(input.substring(first + 1, input.length()));
-                case "deadline":
-                    if (input.split("/by ").length < 2) { // can throw exception here instead nexttime
-                        return null;
-                    }
-                    return new Deadline(input.substring(first + 1, last), input.split(" /by ")[1]);
-                case "event":
-                    if (input.split("/from |/to ").length < 3) { // can throw exception here instead nexttime
-                        return null;
-                    }
-                    return new Event(input.substring(first + 1, last),
-                            input.split(" /from | /to ")[1],
-                            input.split(" /from | /to ")[2], false);
-                default:
+            case "todo":
+                return new ToDo(input.substring(first + 1, input.length()));
+            case "deadline":
+                if (input.split("/by ").length < 2) { // can throw exception here instead nexttime
                     return null;
+                }
+                return new Deadline(input.substring(first + 1, last), input.split(" /by ")[1]);
+            case "event":
+                if (input.split("/from |/to ").length < 3) { // can throw exception here instead nexttime
+                    return null;
+                }
+                return new Event(input.substring(first + 1, last),
+                        input.split(" /from | /to ")[1],
+                        input.split(" /from | /to ")[2], false);
+            default:
+                return null;
             }
         } catch (DateTimeParseException e) {
             return null;
