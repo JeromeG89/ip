@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'application'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'checkstyle'
 }
 
 repositories {
@@ -27,12 +28,17 @@ test {
     }
 }
 
+checkstyle {
+    toolVersion = '11.0.0'
+    configFile = file('config/checkstyle/checkstyle.xml')
+}
+
 application {
-    mainClass.set("seedu.duke.Duke")
+    mainClass.set("bingBot.BingBot")
 }
 
 shadowJar {
-    archiveBaseName = "duke"
+    archiveBaseName = "bingBot"
     archiveClassifier = null
 }
 
