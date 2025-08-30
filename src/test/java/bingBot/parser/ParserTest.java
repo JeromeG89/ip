@@ -1,13 +1,15 @@
 package bingbot.parser;
 
-import java.time.LocalDateTime;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.time.LocalDateTime;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import bingbot.BingBot;
 import bingbot.Tasks.Deadline;
 import bingbot.Tasks.Event;
 import bingbot.Tasks.Task;
@@ -16,13 +18,13 @@ import bingbot.tasklist.TaskList;
 
 class ParserTest {
 
-    TaskList taskList;
-    Parser parser;
+    private TaskList taskList;
+    private Parser parser;
 
     @BeforeEach
     void setup() {
         taskList = new TaskList();
-        parser = new Parser(taskList);
+        parser = new Parser(taskList, BingBot.getUi());
     }
 
     @Test
@@ -38,9 +40,7 @@ class ParserTest {
                 new String[] { "deadline", "Submit", "report" });
         assertTrue(task instanceof Deadline);
         assertEquals("Submit report ", ((Deadline) task).getName());
-        assertEquals(
-                LocalDateTime.of(2025, 9, 1, 18, 0),
-                ((Deadline) task).getDeadline());
+        assertEquals(LocalDateTime.of(2025, 9, 1, 18, 0), ((Deadline) task).getDeadline());
     }
 
     @Test
@@ -49,12 +49,8 @@ class ParserTest {
                 new String[] { "event", "Party" });
         assertTrue(task instanceof Event);
         assertEquals("Party ", ((Event) task).getName());
-        assertEquals(
-                LocalDateTime.of(2025, 9, 1, 18, 0),
-                ((Event) task).getFrom());
-        assertEquals(
-                LocalDateTime.of(2025, 9, 2, 18, 0),
-                ((Event) task).getTo());
+        assertEquals(LocalDateTime.of(2025, 9, 1, 18, 0), ((Event) task).getFrom());
+        assertEquals(LocalDateTime.of(2025, 9, 2, 18, 0), ((Event) task).getTo());
     }
 
     @Test
