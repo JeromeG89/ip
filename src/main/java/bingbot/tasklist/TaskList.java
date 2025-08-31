@@ -1,6 +1,8 @@
 package bingbot.tasklist;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import bingbot.Tasks.Task;
 import bingbot.ui.Ui;
@@ -13,6 +15,10 @@ public class TaskList extends ArrayList<Task> {
 
     public TaskList() {
         super();
+    }
+
+    public TaskList(List<Task> tasks) {
+        super(tasks);
     }
 
     /**
@@ -68,5 +74,20 @@ public class TaskList extends ArrayList<Task> {
      */
     public Task delete(int idx) {
         return super.remove(idx);
+    }
+
+    /**
+     * Finds if any task name contains taskName.
+     * 
+     * Returns the task if any.
+     * 
+     * @param taskName the name to search.
+     * @return the task if any.
+     */
+    public TaskList findTask(String taskName) {
+        return new TaskList(
+                super.stream()
+                        .filter(t -> t.getName().contains(taskName))
+                        .collect(Collectors.toList()));
     }
 }

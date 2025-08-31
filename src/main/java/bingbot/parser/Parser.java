@@ -64,6 +64,10 @@ public class Parser {
             int markIndex = Integer.parseInt(parts[1]) - 1;
             Task deletedTask = taskList.remove(markIndex);
             ui.delete(deletedTask, taskList.size());
+        } else if (command.equals("find") && parts.length >= 2) {
+            String taskName = parts[1];
+            TaskList tasks = this.findTask(taskName);
+            ui.findTask(tasks);
         } else {
             Task inputTask = this.createTask(input, parts);
             if (inputTask == null) {
@@ -112,6 +116,10 @@ public class Parser {
         } catch (DateTimeParseException e) {
             return null;
         }
+    }
+
+    public TaskList findTask(String taskName) {
+        return this.taskList.findTask(taskName);
     }
 
 }

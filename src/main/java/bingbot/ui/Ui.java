@@ -1,6 +1,7 @@
 package bingbot.ui;
 
 import bingbot.Tasks.Task;
+import bingbot.tasklist.TaskList;
 
 /**
  * Represents the user interface for BingBot.
@@ -90,4 +91,8 @@ public class Ui {
         System.out.println(LINE);
     }
 
+    public void findTask(TaskList taskList) {
+        System.out.println("Found these tasks: ");
+        System.out.println(taskList.toString());
+    }
 }
