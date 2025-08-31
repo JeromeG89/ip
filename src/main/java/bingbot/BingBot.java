@@ -44,7 +44,7 @@ public class BingBot {
         }
     }
 
-    public Ui getUi() {
-        return this.ui;
+    public static Ui getUi() {
+        return ui;
     }
 }
