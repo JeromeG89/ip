@@ -78,9 +78,7 @@ public class TaskList extends ArrayList<Task> {
 
     /**
      * Finds if any task name contains taskName.
-     * 
      * Returns the task if any.
-     * 
      * @param taskName the name to search.
      * @return the task if any.
      */

@@ -91,6 +91,11 @@ public class Ui {
         System.out.println(LINE);
     }
 
+    /**
+     * Prints the confirmation message when a find task is executed.
+     *
+     * @param taskList the tasks found.
+     */
     public void findTask(TaskList taskList) {
         System.out.println("Found these tasks: ");
         System.out.println(taskList.toString());
