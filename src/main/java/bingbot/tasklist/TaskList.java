@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import bingbot.Tasks.Task;
+import bingbot.tasks.Task;
 import bingbot.ui.Ui;
 
 /**

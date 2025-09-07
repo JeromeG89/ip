@@ -1,4 +1,4 @@
-package bingbot.Tasks;
+package bingbot.tasks;
 
 /**
  * Represents a ToDo task.
