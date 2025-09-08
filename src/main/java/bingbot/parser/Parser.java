@@ -1,7 +1,10 @@
 package bingbot.parser;
 
 import java.time.format.DateTimeParseException;
+import java.util.Arrays;
 
+import bingbot.errors.InvalidCommandException;
+import bingbot.errors.InvalidTaskException;
 import bingbot.tasklist.TaskList;
 import bingbot.tasks.Deadline;
 import bingbot.tasks.Event;
@@ -14,6 +17,7 @@ import bingbot.ui.Ui;
  * commands or tasks.
  */
 public class Parser {
+    private String[] taskTypes = {"TODO", "DEADLINE", "EVENT"};
     private final Ui ui;
     private final TaskList taskList;
 
@@ -36,7 +40,7 @@ public class Parser {
      * @param input the raw user input string.
      * @return true if the session should end, false otherwise.
      */
-    public boolean handleMessage(String input) {
+    public String handleMessage(String input) {
         String[] parts = input.split(" ");
         String command = parts[0];
         if (command.equals("mark") || command.equals("unmark")) {
@@ -44,40 +48,38 @@ public class Parser {
                 Integer.parseInt(parts[1]);
             } catch (NumberFormatException e) {
                 ui.playPunk();
-                return false;
+                return null;
             }
         }
-        if (input.equals("bye")) {
-            ui.bye();
-            return true;
-        } else if (input.equals("list")) {
-            System.out.println(taskList.toString());
+        // if (input.equals("bye")) {
+        //     return ui.bye();
+        if (input.equals("list")) {
+            return ui.list(taskList);
         } else if (command.equals("unmark") && parts.length >= 2 && Integer.parseInt(parts[1]) <= taskList.size()) {
             int markIndex = Integer.parseInt(parts[1]) - 1;
             Task unmarked = taskList.unmark(markIndex);
-            ui.unmark(unmarked);
+            return ui.unmark(unmarked);
         } else if (command.equals("mark") && parts.length >= 2 && Integer.parseInt(parts[1]) <= taskList.size()) {
             int markIndex = Integer.parseInt(parts[1]) - 1;
             Task marked = taskList.mark(markIndex);
-            ui.mark(marked);
+            return ui.mark(marked);
         } else if (command.equals("delete") && parts.length >= 2) {
             int markIndex = Integer.parseInt(parts[1]) - 1;
             Task deletedTask = taskList.remove(markIndex);
-            ui.delete(deletedTask, taskList.size());
+            return ui.delete(deletedTask, taskList.size());
         } else if (command.equals("find") && parts.length >= 2) {
             String taskName = parts[1];
             TaskList tasks = this.findTask(taskName);
-            ui.findTask(tasks);
-        } else {
+            return ui.findTask(tasks);
+        } else if (Arrays.asList(taskTypes).contains(command.toUpperCase())) {
             Task inputTask = this.createTask(input, parts);
             if (inputTask == null) {
-                ui.playPunk();
-                return false;
+                throw new InvalidTaskException(command);
             }
             taskList.add(inputTask);
-            ui.add(inputTask, taskList.size());
+            return ui.add(inputTask, taskList.size());
         }
-        return false;
+        throw new InvalidCommandException();
     }
 
     /**

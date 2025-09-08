@@ -20,6 +20,7 @@ public class BingBot {
     private Storage storage = new Storage(BingBot.FILE_PATH);
     private TaskList taskList = storage.getMemory();
     private Parser parser = new Parser(taskList, ui);
+
     /**
      * Runs the BingBot program by initializing storage, UI, and parser.
      * Continuously reads user input until the exit command is given.
@@ -37,9 +38,9 @@ public class BingBot {
 
             while (true) {
                 String input = scanner.nextLine();
-                boolean result = parser.handleMessage(input);
+                String result = parser.handleMessage(input);
                 storage.toMemory(taskList);
-                if (result) {
+                if (result == null) {
                     break;
                 }
             }
@@ -54,8 +55,12 @@ public class BingBot {
      * Generates a response for the user's chat message.
      */
     public String getResponse(String input) {
-        String response = parser.handleMessage(input);
-        return "BingBot heard: " + input;
+        try {
+            String response = parser.handleMessage(input);
+            return response;
+        } catch (Exception e) {
+            return e.getMessage();
+        }
     }
 
 }

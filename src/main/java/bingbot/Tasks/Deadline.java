@@ -3,8 +3,8 @@ package bingbot.tasks;
 import java.time.LocalDateTime;
 
 /**
- * Represents a task with a deadline.
- * A {@code Deadline} has a description and a specific due date/time.
+ * Represents a task with a deadline. A {@code Deadline} has a description and a
+ * specific due date/time.
  */
 public class Deadline extends Task {
     private LocalDateTime to;
@@ -13,17 +13,18 @@ public class Deadline extends Task {
      * Constructs a new {@code Deadline} with the given name and deadline.
      *
      * @param name the description of the deadline task.
-     * @param to   the deadline as a string.
+     * @param to the deadline as a string.
      */
     public Deadline(String name, String to) {
         this(name, to, false);
     }
 
     /**
-     * Constructs a new {@code Deadline} with the given name, deadline, and status.
+     * Constructs a new {@code Deadline} with the given name, deadline, and
+     * status.
      *
-     * @param name   the description of the deadline task.
-     * @param to     the deadline as a string.
+     * @param name the description of the deadline task.
+     * @param to the deadline as a string.
      * @param isDone whether the task is completed.
      */
     public Deadline(String name, String to, boolean isDone) {
@@ -53,7 +54,8 @@ public class Deadline extends Task {
     }
 
     /**
-     * Returns the string representation of this {@code Deadline} for saving to memory.
+     * Returns the string representation of this {@code Deadline} for saving to
+     * memory.
      *
      * @return the memory string of this deadline.
      */
@@ -69,5 +71,9 @@ public class Deadline extends Task {
      */
     public LocalDateTime getDeadline() {
         return this.to;
+    }
+
+    public static String inputArgument() {
+        return "deadline <task name> /by <date: dd/mm/yyyy> <time: HHmm>";
     }
 }

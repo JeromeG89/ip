@@ -67,13 +67,13 @@ public class Ui {
     /**
      * Prints for console.
      *
-     * @param listString the string representation of the list.
+     * @param tl the task list.
      * @return the string representation of listString.
      */
-    public String list(String listString) {
+    public String list(TaskList tl) {
         StringBuilder sb = new StringBuilder();
-        sb.append(listString);
-        System.out.println(listString);
+        sb.append(tl.toString());
+        System.out.println(tl.toString());
         return sb.toString();
     }
 

@@ -23,8 +23,8 @@ public class MainWindow extends AnchorPane {
 
     private BingBot bingBot;
 
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/User.png"));
-    private Image botImage = new Image(this.getClass().getResourceAsStream("/images/Bot.png"));
+    private final Image userImage = new Image(this.getClass().getResourceAsStream("/images/User.png"));
+    private final Image botImage = new Image(this.getClass().getResourceAsStream("/images/Bot.png"));
 
     @FXML
     public void initialize() {
@@ -37,7 +37,7 @@ public class MainWindow extends AnchorPane {
     }
 
     /**
-     * Creates two dialog boxes, one echoing user input and the other containing Duke's reply and then appends them to
+     * Creates two dialog boxes, one echoing user input and the other containing bot's reply and then appends them to
      * the dialog container. Clears the user input after processing.
      */
     @FXML

@@ -3,8 +3,8 @@ package bingbot.tasks;
 import java.time.LocalDateTime;
 
 /**
- * Represents a task that spans a period of time.
- * An {@code Event} has a description, a start time, and an end time.
+ * Represents a task that spans a period of time. An {@code Event} has a
+ * description, a start time, and an end time.
  */
 public class Event extends Task {
     private LocalDateTime from;
@@ -15,18 +15,19 @@ public class Event extends Task {
      *
      * @param name the description of the event task.
      * @param from the start time as a string.
-     * @param to   the end time as a string.
+     * @param to the end time as a string.
      */
     public Event(String name, String from, String to) {
         this(name, from, to, false);
     }
 
     /**
-     * Constructs a new {@code Event} with the given name, start, end time, and status.
+     * Constructs a new {@code Event} with the given name, start, end time, and
+     * status.
      *
-     * @param name   the description of the event task.
-     * @param from   the start time as a string.
-     * @param to     the end time as a string.
+     * @param name the description of the event task.
+     * @param from the start time as a string.
+     * @param to the end time as a string.
      * @param isDone whether the task is completed.
      */
     public Event(String name, String from, String to, boolean isDone) {
@@ -58,7 +59,8 @@ public class Event extends Task {
     }
 
     /**
-     * Returns the string representation of this {@code Event} for saving to memory.
+     * Returns the string representation of this {@code Event} for saving to
+     * memory.
      *
      * @return the memory string of this event.
      */
@@ -83,5 +85,9 @@ public class Event extends Task {
      */
     public LocalDateTime getTo() {
         return this.to;
+    }
+
+    public static String inputArgument() {
+        return "event <task name> /from <date: dd/mm/yyyy> <time: HHmm> /to <date: dd/mm/yyyy> <time: HHmm>";
     }
 }

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import bingbot.tasks.Task;
-import bingbot.ui.Ui;
 
 /**
  * Represents a list of tasks with helper methods for marking, unmarking, and
@@ -35,7 +34,6 @@ public class TaskList extends ArrayList<Task> {
         for (int i = 0; i < super.size(); i++) {
             sb.append(i + 1).append(". ").append(super.get(i)).append("\n");
         }
-        sb.append(Ui.LINE).append("\n");
         return sb.toString();
     }
 
