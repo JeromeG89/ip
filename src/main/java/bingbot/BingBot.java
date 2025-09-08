@@ -8,15 +8,18 @@ import bingbot.tasklist.TaskList;
 import bingbot.ui.Ui;
 
 /**
- * Class for the BingBot application.
- * BingBot is a task management chatbot that stores tasks,
- * retrieves them from memory, and allows interaction via commands.
+ * Class for the BingBot application. BingBot is a task management chatbot that
+ * stores tasks, retrieves them from memory, and allows interaction via
+ * commands.
  */
 public class BingBot {
     /** File path where tasks are stored. */
     public static final String FILE_PATH = "./data/bingTask.txt";
 
     private static Ui ui = new Ui();
+    private Storage storage = new Storage(BingBot.FILE_PATH);
+    private TaskList taskList = storage.getMemory();
+    private Parser parser = new Parser(taskList, ui);
 
     /**
      * Runs the BingBot program by initializing storage, UI, and parser.
@@ -35,9 +38,9 @@ public class BingBot {
 
             while (true) {
                 String input = scanner.nextLine();
-                boolean result = parser.handleMessage(input);
+                String result = parser.handleMessage(input);
                 storage.toMemory(taskList);
-                if (result) {
+                if (result == null) {
                     break;
                 }
             }
@@ -47,4 +50,17 @@ public class BingBot {
     public static Ui getUi() {
         return ui;
     }
+
+    /**
+     * Generates a response for the user's chat message.
+     */
+    public String getResponse(String input) {
+        try {
+            String response = parser.handleMessage(input);
+            return response;
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+    }
+
 }

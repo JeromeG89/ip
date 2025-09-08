@@ -1,4 +1,4 @@
-package bingbot.Tasks;
+package bingbot.tasks;
 
 /**
  * Represents a ToDo task.
@@ -17,7 +17,7 @@ public class ToDo extends Task {
     /**
      * Creates a new ToDo task.
      *
-     * @param name   Name of the task.
+     * @param name Name of the task.
      * @param isDone Whether the task is completed.
      */
     protected ToDo(String name, boolean isDone) {
@@ -53,5 +53,9 @@ public class ToDo extends Task {
     @Override
     public String toMemory() {
         return String.format("T|%d|%s", super.isDone() ? 1 : 0, super.getName());
+    }
+
+    public static String inputArgument() {
+        return "todo <task name>";
     }
 }

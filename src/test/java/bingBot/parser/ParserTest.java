@@ -10,11 +10,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import bingbot.BingBot;
-import bingbot.Tasks.Deadline;
-import bingbot.Tasks.Event;
-import bingbot.Tasks.Task;
-import bingbot.Tasks.ToDo;
 import bingbot.tasklist.TaskList;
+import bingbot.tasks.Deadline;
+import bingbot.tasks.Event;
+import bingbot.tasks.Task;
+import bingbot.tasks.ToDo;
 
 class ParserTest {
 

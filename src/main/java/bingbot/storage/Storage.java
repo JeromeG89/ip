@@ -5,11 +5,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-import bingbot.Tasks.Deadline;
-import bingbot.Tasks.Event;
-import bingbot.Tasks.Task;
-import bingbot.Tasks.ToDo;
 import bingbot.tasklist.TaskList;
+import bingbot.tasks.Deadline;
+import bingbot.tasks.Event;
+import bingbot.tasks.Task;
+import bingbot.tasks.ToDo;
 
 /**
  * Handles reading from and writing to the storage file for tasks.

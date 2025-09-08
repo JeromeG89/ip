@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import bingbot.Tasks.ToDo;
 import bingbot.tasklist.TaskList;
+import bingbot.tasks.ToDo;
 
 public class TaskListTest {
     @Test
