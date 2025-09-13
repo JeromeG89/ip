@@ -1,9 +1,12 @@
 package bingbot.tasklist;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import bingbot.tasks.Deadline;
+import bingbot.tasks.Event;
 import bingbot.tasks.Task;
 
 /**
@@ -92,5 +95,51 @@ public class TaskList extends ArrayList<Task> {
     public TaskList findTask(String taskName) {
         assert taskName != null && !taskName.isBlank() : "Search query must not be null/blank";
         return new TaskList(super.stream().filter(t -> t.getName().contains(taskName)).collect(Collectors.toList()));
+    }
+
+    /**
+     * Gets the relevant time of a task.
+     *
+     * @param t the task.
+     * @return the deadline/event time, or {@code null} if none.
+     */
+    private static LocalDateTime timeOf(Task t) {
+        if (t instanceof Deadline) {
+            return ((Deadline) t).getDeadline();
+        }
+        if (t instanceof Event) {
+            return ((Event) t).getFrom();
+        }
+        return null;
+    }
+
+    /**
+     * Compares tasks by time if both have one; otherwise by name.
+     *
+     * @param a first task.
+     * @param b second task.
+     * @return comparison result.
+     */
+    private static int compareSmart(Task a, Task b) {
+        LocalDateTime ta = timeOf(a);
+        LocalDateTime tb = timeOf(b);
+        if (ta != null && tb != null) {
+            int c = ta.compareTo(tb);
+            if (c != 0) {
+                return c;
+            }
+        }
+        // mixed types or equal times → compare by name
+        return a.getName().compareToIgnoreCase(b.getName());
+    }
+
+    /**
+     * Returns a new TaskList sorted inplace by time if available, else by name.
+     *
+     * @return sorted TaskList.
+     */
+    public TaskList sortSmart() {
+        super.sort(TaskList::compareSmart);
+        return this;
     }
 }

@@ -77,6 +77,9 @@ public class Parser {
             Task inputTask = this.createTask(input, parts);
             taskList.add(inputTask);
             return ui.add(inputTask, taskList.size());
+        } else if (command.equals("sort")) {
+            taskList.sortSmart();
+            return ui.sort(taskList);
         }
         throw new InvalidCommandException();
     }
