@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
  * specific due date/time.
  */
 public class Deadline extends Task {
-    private LocalDateTime to;
+    private LocalDateTime by;
 
     /**
      * Constructs a new {@code Deadline} with the given name and deadline.
@@ -15,8 +15,8 @@ public class Deadline extends Task {
      * @param name the description of the deadline task.
      * @param to the deadline as a string.
      */
-    public Deadline(String name, String to) {
-        this(name, to, false);
+    public Deadline(String name, String by) {
+        this(name, by, false);
     }
 
     /**
@@ -29,7 +29,7 @@ public class Deadline extends Task {
      */
     public Deadline(String name, String to, boolean isDone) {
         super(name, isDone);
-        this.to = super.parseDate(to);
+        this.by = super.parseDate(to);
     }
 
     /**
@@ -39,7 +39,7 @@ public class Deadline extends Task {
      */
     @Override
     public String toString() {
-        return "[D]" + super.toString() + String.format("(by: %s)", to.format(outputFormatter));
+        return "[D]" + super.toString() + String.format("(by: %s)", by.format(outputFormatter));
     }
 
     /**
@@ -61,7 +61,7 @@ public class Deadline extends Task {
      */
     @Override
     public String toMemory() {
-        return String.format("D|%d|%s|%s", super.isDone() ? 1 : 0, super.getName(), this.to);
+        return String.format("D|%d|%s|%s", super.isDone() ? 1 : 0, super.getName(), this.by);
     }
 
     /**
@@ -70,7 +70,7 @@ public class Deadline extends Task {
      * @return the deadline as a {@code LocalDateTime}
      */
     public LocalDateTime getDeadline() {
-        return this.to;
+        return this.by;
     }
 
     public static String inputArgument() {

@@ -137,4 +137,16 @@ public class Ui {
         System.out.println(taskList.toString());
         return sb.toString();
     }
+
+    /**
+     * Prints the confirmation message when a sort task is executed.
+     *
+     * @param taskList the tasks after sorted.
+     */
+    public String sort(TaskList taskList) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("SORTED!!!!!!\n");
+        sb.append(taskList.toString());
+        return sb.toString();
+    }
 }
