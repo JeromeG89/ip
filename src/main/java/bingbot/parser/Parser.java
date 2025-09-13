@@ -28,6 +28,8 @@ public class Parser {
      * @param ui       the user interface to interact with.
      */
     public Parser(TaskList taskList, Ui ui) {
+        assert taskList != null : "taskList must not be null";
+        assert ui != null : "ui must not be null";
         this.taskList = taskList;
         this.ui = ui;
     }
@@ -73,9 +75,6 @@ public class Parser {
             return ui.findTask(tasks);
         } else if (Arrays.asList(taskTypes).contains(command.toUpperCase())) {
             Task inputTask = this.createTask(input, parts);
-            if (inputTask == null) {
-                throw new InvalidTaskException(command);
-            }
             taskList.add(inputTask);
             return ui.add(inputTask, taskList.size());
         }
@@ -92,7 +91,7 @@ public class Parser {
      * @param parts the input split into words.
      * @return a Task object or null if input is invalid.
      */
-    public Task createTask(String input, String[] parts) {
+    public Task createTask(String input, String[] parts) throws InvalidTaskException {
         String taskType = parts[0];
         int first = input.indexOf(" ");
         int last = input.indexOf("/");
@@ -101,22 +100,22 @@ public class Parser {
             case "todo":
                 return new ToDo(input.substring(first + 1, input.length()));
             case "deadline":
-                if (input.split("/by ").length < 2) { // can throw exception here instead nexttime
-                    return null;
+                if (input.split("/by ").length < 2) {
+                    throw new InvalidTaskException(taskType);
                 }
                 return new Deadline(input.substring(first + 1, last), input.split(" /by ")[1]);
             case "event":
-                if (input.split("/from |/to ").length < 3) { // can throw exception here instead nexttime
-                    return null;
+                if (input.split("/from |/to ").length < 3) {
+                    throw new InvalidTaskException(taskType);
                 }
                 return new Event(input.substring(first + 1, last),
                         input.split(" /from | /to ")[1],
                         input.split(" /from | /to ")[2], false);
             default:
-                return null;
+                throw new InvalidTaskException(taskType);
             }
         } catch (DateTimeParseException e) {
-            return null;
+            throw new InvalidTaskException(taskType);
         }
     }
 

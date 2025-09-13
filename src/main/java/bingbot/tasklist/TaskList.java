@@ -16,8 +16,15 @@ public class TaskList extends ArrayList<Task> {
         super();
     }
 
+    /**
+     * Creates a TaskList pre-filled with the given tasks.
+     *
+     * @param tasks the initial list of tasks; must not be {@code null}.
+     * @throws AssertionError if tasks is {@code null} and assertions are enabled.
+     */
     public TaskList(List<Task> tasks) {
         super(tasks);
+        assert tasks != null : "Task list must not be null";
     }
 
     /**
@@ -32,6 +39,8 @@ public class TaskList extends ArrayList<Task> {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < super.size(); i++) {
+            Task task = super.get(i);
+            assert task != null : "Task at index " + i + " should never be null";
             sb.append(i + 1).append(". ").append(super.get(i)).append("\n");
         }
         return sb.toString();
@@ -75,15 +84,13 @@ public class TaskList extends ArrayList<Task> {
     }
 
     /**
-     * Finds if any task name contains taskName.
-     * Returns the task if any.
+     * Finds if any task name contains taskName. Returns the task if any.
+     *
      * @param taskName the name to search.
      * @return the task if any.
      */
     public TaskList findTask(String taskName) {
-        return new TaskList(
-                super.stream()
-                        .filter(t -> t.getName().contains(taskName))
-                        .collect(Collectors.toList()));
+        assert taskName != null && !taskName.isBlank() : "Search query must not be null/blank";
+        return new TaskList(super.stream().filter(t -> t.getName().contains(taskName)).collect(Collectors.toList()));
     }
 }
