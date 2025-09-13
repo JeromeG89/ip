@@ -17,10 +17,10 @@ public class InvalidTaskException extends RuntimeException {
      */
     private static String buildMessage(String taskType) {
         return switch (taskType.toLowerCase()) {
-        case "deadline" -> "❌ Invalid arguments. Usage:\n" + Deadline.inputArgument();
-        case "event" -> "❌ Invalid arguments. Usage:\n" + Event.inputArgument();
-        case "todo" -> "❌ Invalid arguments. Usage:\n" + ToDo.inputArgument();
-        default -> "❌ Unknown task type: " + taskType;
+        case "deadline" -> "Invalid arguments. Usage:\n" + Deadline.inputArgument();
+        case "event" -> "Invalid arguments. Usage:\n" + Event.inputArgument();
+        case "todo" -> "Invalid arguments. Usage:\n" + ToDo.inputArgument();
+        default -> "Unknown task type: " + taskType;
         };
     }
 }
