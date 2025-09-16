@@ -86,7 +86,6 @@ public class Parser {
         case "todo":
         case "deadline":
         case "event": {
-            // createTask only uses parts[0] for the type; pass command safely.
             Task t = this.createTask(trimmed, new String[] { command });
             taskList.add(t);
             return ui.add(t, taskList.size());
