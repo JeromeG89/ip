@@ -1,10 +1,11 @@
-package bingbot.tasklist;
+package pagrobot.tasklist;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
-import bingbot.tasks.ToDo;
+import pagrobot.tasks.ToDo;
 
 public class TaskListTest {
     @Test

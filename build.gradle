@@ -62,11 +62,11 @@ checkstyle {
 }
 
 application {
-    mainClass.set("bingbot.Launcher")
+    mainClass.set("pagrobot.Launcher")
 }
 
 shadowJar {
-    archiveBaseName = "bingBot"
+    archiveBaseName = "pagroBot"
     archiveClassifier = null
 }
 

@@ -1,8 +1,8 @@
-package bingbot.errors;
+package pagrobot.errors;
 
-import bingbot.tasks.Deadline;
-import bingbot.tasks.Event;
-import bingbot.tasks.ToDo;
+import pagrobot.tasks.Deadline;
+import pagrobot.tasks.Event;
+import pagrobot.tasks.ToDo;
 
 /**
  * Indicates that the user has entered an invalid task argument.

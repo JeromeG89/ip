@@ -1,16 +1,16 @@
-package bingbot.parser;
+package pagrobot.parser;
 
 import java.time.format.DateTimeParseException;
 import java.util.Locale;
 
-import bingbot.errors.InvalidCommandException;
-import bingbot.errors.InvalidTaskException;
-import bingbot.tasklist.TaskList;
-import bingbot.tasks.Deadline;
-import bingbot.tasks.Event;
-import bingbot.tasks.Task;
-import bingbot.tasks.ToDo;
-import bingbot.ui.Ui;
+import pagrobot.errors.InvalidCommandException;
+import pagrobot.errors.InvalidTaskException;
+import pagrobot.tasklist.TaskList;
+import pagrobot.tasks.Deadline;
+import pagrobot.tasks.Event;
+import pagrobot.tasks.Task;
+import pagrobot.tasks.ToDo;
+import pagrobot.ui.Ui;
 
 /**
  * Interprets user input and converting it into commands or tasks.
@@ -90,6 +90,8 @@ public class Parser {
             taskList.add(t);
             return ui.add(t, taskList.size());
         }
+        case "help":
+            return ui.help();
         default:
             throw new InvalidCommandException();
         }

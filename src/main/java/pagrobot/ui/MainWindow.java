@@ -1,6 +1,5 @@
-package bingbot.ui;
+package pagrobot.ui;
 
-import bingbot.BingBot;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -8,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import pagrobot.PagroBot;
 /**
  * Acts as the Controller for the main GUI.
  */
@@ -21,7 +21,7 @@ public class MainWindow extends AnchorPane {
     @FXML
     private Button sendButton;
 
-    private BingBot bingBot;
+    private PagroBot pagroBot;
 
     private final Image userImage = new Image(this.getClass().getResourceAsStream("/images/User.png"));
     private final Image botImage = new Image(this.getClass().getResourceAsStream("/images/Bot.png"));
@@ -32,8 +32,12 @@ public class MainWindow extends AnchorPane {
     }
 
     /** Injects the Bot instance */
-    public void setBot(BingBot b) {
-        bingBot = b;
+    public void setBot(PagroBot b) {
+        this.pagroBot = b;
+        String greet = this.pagroBot.greet();
+        dialogContainer.getChildren().addAll(
+            DialogBox.getBotDialog(greet, botImage)
+        );
     }
 
     /**
@@ -43,10 +47,10 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
-        String response = bingBot.getResponse(input);
+        String response = pagroBot.getResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, botImage)
+                DialogBox.getBotDialog(response, botImage)
         );
         userInput.clear();
     }

@@ -1,28 +1,28 @@
-package bingbot;
+package pagrobot;
 
 import java.util.Scanner;
 
-import bingbot.parser.Parser;
-import bingbot.storage.Storage;
-import bingbot.tasklist.TaskList;
-import bingbot.ui.Ui;
+import pagrobot.parser.Parser;
+import pagrobot.storage.Storage;
+import pagrobot.tasklist.TaskList;
+import pagrobot.ui.Ui;
 
 /**
- * Class for the BingBot application. BingBot is a task management chatbot that
+ * Class for the application. pagroBot is a task management chatbot that
  * stores tasks, retrieves them from memory, and allows interaction via
  * commands.
  */
-public class BingBot {
+public class PagroBot {
     /** File path where tasks are stored. */
-    public static final String FILE_PATH = "./data/bingTask.txt";
+    public static final String FILE_PATH = "./data/botTask.txt";
 
     private static Ui ui = new Ui();
-    private Storage storage = new Storage(BingBot.FILE_PATH);
+    private Storage storage = new Storage(PagroBot.FILE_PATH);
     private TaskList taskList = storage.getMemory();
     private Parser parser = new Parser(taskList, ui);
 
     /**
-     * Runs the BingBot program by initializing storage, UI, and parser.
+     * Runs the program by initializing storage, UI, and parser.
      * Continuously reads user input until the exit command is given.
      *
      * @param args Command line arguments.
@@ -31,7 +31,7 @@ public class BingBot {
         TaskList taskList;
 
         try (Scanner scanner = new Scanner(System.in)) {
-            Storage storage = new Storage(BingBot.FILE_PATH);
+            Storage storage = new Storage(PagroBot.FILE_PATH);
             ui.greet();
             taskList = storage.getMemory();
             Parser parser = new Parser(taskList, ui);
@@ -63,4 +63,7 @@ public class BingBot {
         }
     }
 
+    public String greet() {
+        return this.ui.greet();
+    }
 }

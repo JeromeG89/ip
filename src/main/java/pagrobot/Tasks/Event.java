@@ -1,9 +1,9 @@
-package bingbot.tasks;
+package pagrobot.tasks;
 
 import java.time.LocalDateTime;
 
 /**
- * Represents a task that spans a period of time. An {@code Event} has a
+ * Represents a task that spans a period of time. An Event has a
  * description, a start time, and an end time.
  */
 public class Event extends Task {
@@ -11,7 +11,7 @@ public class Event extends Task {
     private LocalDateTime to;
 
     /**
-     * Constructs a new {@code Event} with the given name, start, and end time.
+     * Constructs a new Event with the given name, start, and end time.
      *
      * @param name the description of the event task.
      * @param from the start time as a string.
@@ -22,7 +22,7 @@ public class Event extends Task {
     }
 
     /**
-     * Constructs a new {@code Event} with the given name, start, end time, and
+     * Constructs a new Event with the given name, start, end time, and
      * status.
      *
      * @param name the description of the event task.
@@ -37,7 +37,7 @@ public class Event extends Task {
     }
 
     /**
-     * Returns the string representation of this {@code Event}.
+     * Returns the string representation of this Event.
      *
      * @return the string representation of the event.
      */
@@ -48,7 +48,7 @@ public class Event extends Task {
     }
 
     /**
-     * Creates an {@code Event} from its saved memory representation.
+     * Creates an Event from its saved memory representation.
      *
      * @param input the serialized string.
      * @return the reconstructed event task.
@@ -59,7 +59,7 @@ public class Event extends Task {
     }
 
     /**
-     * Returns the string representation of this {@code Event} for saving to
+     * Returns the string representation of this Event for saving to
      * memory.
      *
      * @return the memory string of this event.
@@ -72,7 +72,7 @@ public class Event extends Task {
     /**
      * Returns the start time of this event.
      *
-     * @return the start time as a {@code LocalDateTime}
+     * @return the start time as a LocalDateTime.
      */
     public LocalDateTime getFrom() {
         return this.from;
@@ -81,7 +81,7 @@ public class Event extends Task {
     /**
      * Returns the end time of this event.
      *
-     * @return the end time as a {@code LocalDateTime}
+     * @return the end time as a LocalDateTime.
      */
     public LocalDateTime getTo() {
         return this.to;
