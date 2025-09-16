@@ -1,26 +1,16 @@
+Ok. Added. You're welcome.
+[T][ ] your auntie
+Total: 1
 ____________________________________________________________
- Hello! I'm BingBot
- What can I do for you?
+Fine. Marked.
+Task 2 not found.
 ____________________________________________________________
-Ok i added this:
-[T][]  your auntie
-Now u got 1 tasks in the list :[
+Here. Your tasks:
+1. [T][ ] your auntie
 ____________________________________________________________
-Ok i added this:
-[E][]  toilet (from: 3pm  to: 10 30pm)
-Now u got 2 tasks in the list :[
+Invalid command. Don't anyhow.
 ____________________________________________________________
-Ok i marked liao
-[E][X]  toilet (from: 3pm  to: 10 30pm)
-____________________________________________________________
-1. [T][]  your auntie
-2. [E][X]  toilet (from: 3pm  to: 10 30pm)
-____________________________________________________________
-dont play punk
-____________________________________________________________
-Ok i deleted this:
-[T][]  your auntie
-Now u got 1 tasks in the list :[
-____________________________________________________________  
-Bye. Hope to never see you again >:[
+Deleted. Happy?
+[T][ ] your auntie
+Left: 0
 ____________________________________________________________

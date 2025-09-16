@@ -1,4 +1,4 @@
-package bingbot.tasks;
+package pagrobot.tasks;
 
 /**
  * Represents a ToDo task.

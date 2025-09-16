@@ -1,4 +1,4 @@
-package bingbot;
+package pagrobot;
 
 import javafx.application.Application;
 

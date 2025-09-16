@@ -1,4 +1,4 @@
-package bingbot.tasks;
+package pagrobot.tasks;
 
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
@@ -6,8 +6,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 /**
- * Represents a general task in BingBot.
- * A {@code Task} has a name, completion status, and optional time information.
+ * Represents a general task in PagroBot.
+ * A Task has a name, completion status, and optional time information.
  */
 public abstract class Task {
     /** Formatter used for displaying dates. */
@@ -17,7 +17,7 @@ public abstract class Task {
 
 
     /**
-     * Constructs a new {@code Task} with the given name.
+     * Constructs a new Task with the given name.
      * The task is initially marked as not done.
      *
      * @param name the description of the task.
@@ -28,7 +28,7 @@ public abstract class Task {
     }
 
     /**
-     * Constructs a new {@code Task} with the given name and completion status.
+     * Constructs a new Task with the given name and completion status.
      *
      * @param name   the description of the task.
      * @param isDone whether the task is already completed.
@@ -39,7 +39,7 @@ public abstract class Task {
     }
 
     /**
-     * Returns the string representation of this {@code Task}.
+     * Returns the string representation of this Task.
      *
      * @return the string representation of the task.
      */
@@ -51,7 +51,7 @@ public abstract class Task {
     }
 
     /**
-     * Marks this {@code Task} as completed.
+     * Marks this Task as completed.
      *
      * @return this task, marked as done.
      */
@@ -61,7 +61,7 @@ public abstract class Task {
     }
 
     /**
-     * Marks this {@code Task} as not completed.
+     * Marks this Task as not completed.
      *
      * @return this task, marked as not done.
      */
@@ -78,8 +78,8 @@ public abstract class Task {
     public abstract String toMemory();
 
     /**
-     * Reconstructs a {@code Task} from its saved memory representation.
-     * By default, returns a {@link ToDo} task.
+     * Reconstructs a Task from its saved memory representation.
+     * By default, returns a ToDo task by default.
      *
      * @param input the serialized string.
      * @return the reconstructed task.
@@ -90,11 +90,11 @@ public abstract class Task {
     }
 
     /**
-     * Parses a date string into a {@code LocalDateTime}.
-     * Accepts either ISO format or {@code d/M/yyyy HHmm}.
+     * Parses a date string into a LocalDateTime.
+     * Accepts either ISO format or d/M/yyyy HHmm.
      *
      * @param dateString the string to parse.
-     * @return the parsed {@code LocalDateTime}
+     * @return the parsed LocalDateTime.
      * @throws DateTimeParseException if the string cannot be parsed.
      */
     public LocalDateTime parseDate(String dateString) throws DateTimeParseException {

@@ -1,7 +1,6 @@
-package bingbot.parser;
-
+package pagrobot.parser;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
@@ -9,12 +8,13 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import bingbot.BingBot;
-import bingbot.tasklist.TaskList;
-import bingbot.tasks.Deadline;
-import bingbot.tasks.Event;
-import bingbot.tasks.Task;
-import bingbot.tasks.ToDo;
+import pagrobot.PagroBot;
+import pagrobot.errors.InvalidTaskException;
+import pagrobot.tasklist.TaskList;
+import pagrobot.tasks.Deadline;
+import pagrobot.tasks.Event;
+import pagrobot.tasks.Task;
+import pagrobot.tasks.ToDo;
 
 class ParserTest {
 
@@ -24,7 +24,7 @@ class ParserTest {
     @BeforeEach
     void setup() {
         taskList = new TaskList();
-        parser = new Parser(taskList, BingBot.getUi());
+        parser = new Parser(taskList, PagroBot.getUi());
     }
 
     @Test
@@ -55,7 +55,9 @@ class ParserTest {
 
     @Test
     void testCreateInvalidTask() {
-        Task task = parser.createTask("random text", new String[] { "random", "text" });
-        assertNull(task);
+        InvalidTaskException ex = assertThrows(
+            InvalidTaskException.class, () -> parser.createTask("random text", new String[] {"random", "text"})
+        );
+        assertTrue(ex.getMessage().contains("Unknown task type"));
     }
 }

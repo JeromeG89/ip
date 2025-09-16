@@ -1,20 +1,20 @@
-package bingbot;
+package pagrobot;
 
 import java.io.IOException;
 
-import bingbot.ui.MainWindow;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import pagrobot.ui.MainWindow;
 
 /**
- * Represents a GUI for BingBot using FXML.
+ * Represents a GUI for PagroBot using FXML.
  */
 public class Main extends Application {
 
-    private BingBot bingBot = new BingBot();
+    private PagroBot pagroBot = new PagroBot();
 
     @Override
     public void start(Stage stage) {
@@ -23,7 +23,7 @@ public class Main extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
-            fxmlLoader.<MainWindow>getController().setBot(bingBot);
+            fxmlLoader.<MainWindow>getController().setBot(pagroBot);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
