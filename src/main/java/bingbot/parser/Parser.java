@@ -1,7 +1,7 @@
 package bingbot.parser;
 
 import java.time.format.DateTimeParseException;
-import java.util.Arrays;
+import java.util.Locale;
 
 import bingbot.errors.InvalidCommandException;
 import bingbot.errors.InvalidTaskException;
@@ -13,11 +13,10 @@ import bingbot.tasks.ToDo;
 import bingbot.ui.Ui;
 
 /**
- * Interprets user input and converting it into
- * commands or tasks.
+ * Interprets user input and converting it into commands or tasks.
  */
 public class Parser {
-    private String[] taskTypes = {"TODO", "DEADLINE", "EVENT"};
+    private String[] taskTypes = { "TODO", "DEADLINE", "EVENT" };
     private final Ui ui;
     private final TaskList taskList;
 
@@ -25,7 +24,7 @@ public class Parser {
      * Creates a Parser that will process user input into commands.
      *
      * @param taskList the list of tasks to operate on.
-     * @param ui       the user interface to interact with.
+     * @param ui the user interface to interact with.
      */
     public Parser(TaskList taskList, Ui ui) {
         assert taskList != null : "taskList must not be null";
@@ -35,53 +34,100 @@ public class Parser {
     }
 
     /**
-     * Handles a user input message and executes the corresponding action.
+     * Parses a user input line, executes the corresponding action, and returns
+     * the UI-rendered response. Throws when the command is invalid.
      *
-     * Returns true if the input ends the session (i.e., "bye"), false otherwise.
-     *
-     * @param input the raw user input string.
-     * @return true if the session should end, false otherwise.
+     * @param input raw user input.
+     * @return response string to display.
+     * @throws InvalidCommandException if the command or its arguments are invalid.
      */
     public String handleMessage(String input) {
-        String[] parts = input.split(" ");
-        String command = parts[0];
-        if (command.equals("mark") || command.equals("unmark")) {
-            try {
-                Integer.parseInt(parts[1]);
-            } catch (NumberFormatException e) {
-                ui.playPunk();
-                return null;
-            }
+        if (input == null || input.isBlank()) {
+            throw new InvalidCommandException();
         }
-        // if (input.equals("bye")) {
-        //     return ui.bye();
-        if (input.equals("list")) {
+
+        String trimmed = input.trim();
+        int space = trimmed.indexOf(' ');
+        String command = (space == -1 ? trimmed : trimmed.substring(0, space)).toLowerCase(Locale.ROOT);
+        String rest = (space == -1 ? "" : trimmed.substring(space + 1)).trim();
+
+        switch (command) {
+        case "list":
             return ui.list(taskList);
-        } else if (command.equals("unmark") && parts.length >= 2 && Integer.parseInt(parts[1]) <= taskList.size()) {
-            int markIndex = Integer.parseInt(parts[1]) - 1;
-            Task unmarked = taskList.unmark(markIndex);
-            return ui.unmark(unmarked);
-        } else if (command.equals("mark") && parts.length >= 2 && Integer.parseInt(parts[1]) <= taskList.size()) {
-            int markIndex = Integer.parseInt(parts[1]) - 1;
-            Task marked = taskList.mark(markIndex);
+        case "mark": {
+            int idx = parsePositiveIndex(rest);
+            ensureInRange(idx, taskList.size());
+            Task marked = taskList.mark(idx - 1);
             return ui.mark(marked);
-        } else if (command.equals("delete") && parts.length >= 2) {
-            int markIndex = Integer.parseInt(parts[1]) - 1;
-            Task deletedTask = taskList.remove(markIndex);
-            return ui.delete(deletedTask, taskList.size());
-        } else if (command.equals("find") && parts.length >= 2) {
-            String taskName = parts[1];
-            TaskList tasks = this.findTask(taskName);
-            return ui.findTask(tasks);
-        } else if (Arrays.asList(taskTypes).contains(command.toUpperCase())) {
-            Task inputTask = this.createTask(input, parts);
-            taskList.add(inputTask);
-            return ui.add(inputTask, taskList.size());
-        } else if (command.equals("sort")) {
+        }
+        case "unmark": {
+            int idx = parsePositiveIndex(rest);
+            ensureInRange(idx, taskList.size());
+            Task unmarked = taskList.unmark(idx - 1);
+            return ui.unmark(unmarked);
+        }
+        case "delete": {
+            int idx = parsePositiveIndex(rest);
+            ensureInRange(idx, taskList.size());
+            Task deleted = taskList.remove(idx - 1);
+            return ui.delete(deleted, taskList.size());
+        }
+        case "find": {
+            if (rest.isBlank()) {
+                throw new InvalidCommandException();
+            }
+            TaskList results = this.findTask(rest);
+            return ui.findTask(results);
+        }
+        case "sort":
             taskList.sortSmart();
             return ui.sort(taskList);
+
+        case "todo":
+        case "deadline":
+        case "event": {
+            Task t = this.createTask(trimmed, new String[] { command });
+            taskList.add(t);
+            return ui.add(t, taskList.size());
         }
-        throw new InvalidCommandException();
+        default:
+            throw new InvalidCommandException();
+        }
+    }
+
+    /**
+     * Parses a positive 1-based index from a string.
+     *
+     * @param s string that should contain a decimal integer.
+     * @return parsed positive integer (>= 1).
+     * @throws InvalidCommandException if missing, non-numeric, or not positive.
+     */
+    private static int parsePositiveIndex(String s) {
+        if (s == null || s.isBlank()) {
+            throw new InvalidCommandException();
+        }
+        try {
+            int v = Integer.parseInt(s.trim());
+            if (v <= 0) {
+                throw new InvalidCommandException();
+            }
+            return v;
+        } catch (NumberFormatException e) {
+            throw new InvalidCommandException();
+        }
+    }
+
+    /**
+     * Ensures a 1-based index lies within [1, size].
+     *
+     * @param oneBased 1-based index to validate.
+     * @param size list size.
+     * @throws InvalidCommandException if out of range.
+     */
+    private static void ensureInRange(int oneBased, int size) {
+        if (oneBased < 1 || oneBased > size) {
+            throw new InvalidCommandException();
+        }
     }
 
     /**
@@ -111,8 +157,7 @@ public class Parser {
                 if (input.split("/from |/to ").length < 3) {
                     throw new InvalidTaskException(taskType);
                 }
-                return new Event(input.substring(first + 1, last),
-                        input.split(" /from | /to ")[1],
+                return new Event(input.substring(first + 1, last), input.split(" /from | /to ")[1],
                         input.split(" /from | /to ")[2], false);
             default:
                 throw new InvalidTaskException(taskType);
@@ -122,6 +167,16 @@ public class Parser {
         }
     }
 
+    /**
+     * Searches for tasks in the task list that contain the given keyword.
+     *
+     * Returns a {@link TaskList} containing all tasks whose description
+     * includes the specified keyword. If no tasks match, the returned list will
+     * be empty.
+     *
+     * @param taskName the keyword to search for within task descriptions.
+     * @return a TaskList of tasks matching the given keyword.
+     */
     public TaskList findTask(String taskName) {
         return this.taskList.findTask(taskName);
     }

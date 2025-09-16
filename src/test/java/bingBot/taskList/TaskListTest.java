@@ -1,11 +1,9 @@
-package bingbot.taskList;
+package bingbot.tasklist;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import org.junit.jupiter.api.Test;
 
-import bingbot.tasklist.TaskList;
 import bingbot.tasks.ToDo;
 
 public class TaskListTest {
