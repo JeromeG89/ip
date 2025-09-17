@@ -65,6 +65,10 @@ public class PagroBot {
         }
     }
 
+    /**
+     * Generates a greeting.
+     * @return Bot's greeting.
+     */
     public String greet() {
         return this.ui.greet();
     }
