@@ -104,11 +104,11 @@ public class TaskList extends ArrayList<Task> {
      * @return the deadline/event time, or null if none.
      */
     private static LocalDateTime timeOf(Task t) {
-        if (t instanceof Deadline) {
-            return ((Deadline) t).getDeadline();
+        if (t instanceof Deadline deadline) {
+            return deadline.getDeadline();
         }
-        if (t instanceof Event) {
-            return ((Event) t).getFrom();
+        if (t instanceof Event event) {
+            return event.getFrom();
         }
         return null;
     }
