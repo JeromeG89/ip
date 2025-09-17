@@ -22,8 +22,8 @@ public class TaskList extends ArrayList<Task> {
     /**
      * Creates a TaskList pre-filled with the given tasks.
      *
-     * @param tasks the initial list of tasks; must not be {@code null}.
-     * @throws AssertionError if tasks is {@code null} and assertions are enabled.
+     * @param tasks the initial list of tasks; must not be null.
+     * @throws AssertionError if tasks is null and assertions are enabled.
      */
     public TaskList(List<Task> tasks) {
         super(tasks);
@@ -101,7 +101,7 @@ public class TaskList extends ArrayList<Task> {
      * Gets the relevant time of a task.
      *
      * @param t the task.
-     * @return the deadline/event time, or {@code null} if none.
+     * @return the deadline/event time, or null if none.
      */
     private static LocalDateTime timeOf(Task t) {
         if (t instanceof Deadline) {

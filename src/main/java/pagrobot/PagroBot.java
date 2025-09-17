@@ -60,6 +60,8 @@ public class PagroBot {
             return response;
         } catch (Exception e) {
             return e.getMessage();
+        } finally {
+            storage.toMemory(taskList);
         }
     }
 
