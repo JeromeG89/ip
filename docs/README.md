@@ -99,7 +99,7 @@ You blur? Fine, here:
   list        - show all tasks
   todo XXX    - add a todo
   deadline XXX /by DATE - add a deadline
-  event XXX /at DATE    - add an event
+  event XXX /from DATE /to DATE    - add an event
   mark N      - mark task N done
   unmark N    - unmark task N
   delete N    - delete task N

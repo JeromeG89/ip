@@ -172,7 +172,7 @@ public class Parser {
     /**
      * Searches for tasks in the task list that contain the given keyword.
      *
-     * Returns a {@link TaskList} containing all tasks whose description
+     * Returns a TaskList containing all tasks whose description
      * includes the specified keyword. If no tasks match, the returned list will
      * be empty.
      *
