@@ -31,9 +31,16 @@ public class Storage {
      * @return true if saved successfully, false if an error occurred.
      */
     public boolean toMemory(TaskList stored) {
-        try (FileWriter writer = new FileWriter(this.filePath)) {
+        File file = new File(this.filePath);
+        File parent = file.getParentFile();
+        if (parent != null && !parent.exists()) {
+            parent.mkdirs();
+        }
+
+        try (FileWriter writer = new FileWriter(file)) {
             for (Task t : stored) {
-                writer.write(t.toMemory() + "\n");
+                writer.write(t.toMemory());
+                writer.write(System.lineSeparator());
             }
             return true;
         } catch (IOException e) {
@@ -71,7 +78,7 @@ public class Storage {
             return stored;
         } catch (IOException e) {
             System.out.println("Error handling file: " + e.getMessage());
-            return null;
+            return new TaskList();
         }
     }
 

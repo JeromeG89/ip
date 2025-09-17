@@ -38,7 +38,12 @@ public class PagroBot {
 
             while (true) {
                 String input = scanner.nextLine();
-                String result = parser.handleMessage(input);
+                String result;
+                try {
+                    result = parser.handleMessage(input);
+                } catch (Exception e) {
+                    continue;
+                }
                 storage.toMemory(taskList);
                 if (result == null) {
                     break;
