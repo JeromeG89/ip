@@ -3,14 +3,14 @@ package pagrobot.tasks;
 import java.time.LocalDateTime;
 
 /**
- * Represents a task with a deadline. A {@code Deadline} has a description and a
+ * Represents a task with a deadline. A Deadline has a description and a
  * specific due date/time.
  */
 public class Deadline extends Task {
     private LocalDateTime by;
 
     /**
-     * Constructs a new {@code Deadline} with the given name and deadline.
+     * Constructs a new Deadline with the given name and deadline.
      *
      * @param name the description of the deadline task.
      * @param to the deadline as a string.
@@ -20,7 +20,7 @@ public class Deadline extends Task {
     }
 
     /**
-     * Constructs a new {@code Deadline} with the given name, deadline, and
+     * Constructs a new Deadline with the given name, deadline, and
      * status.
      *
      * @param name the description of the deadline task.
@@ -33,7 +33,7 @@ public class Deadline extends Task {
     }
 
     /**
-     * Returns the string representation of this {@code Deadline}.
+     * Returns the string representation of this Deadline.
      *
      * @return the string representation of the deadline.
      */
@@ -43,7 +43,7 @@ public class Deadline extends Task {
     }
 
     /**
-     * Creates a {@code Deadline} from its saved memory representation.
+     * Creates a Deadline from its saved memory representation.
      *
      * @param input the serialized string.
      * @return the reconstructed deadline task.
@@ -54,7 +54,7 @@ public class Deadline extends Task {
     }
 
     /**
-     * Returns the string representation of this {@code Deadline} for saving to
+     * Returns the string representation of this Deadline for saving to
      * memory.
      *
      * @return the memory string of this deadline.
@@ -67,7 +67,7 @@ public class Deadline extends Task {
     /**
      * Returns the deadline date and time of this task.
      *
-     * @return the deadline as a {@code LocalDateTime}
+     * @return the deadline as a LocalDateTime.
      */
     public LocalDateTime getDeadline() {
         return this.by;
